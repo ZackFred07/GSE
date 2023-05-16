@@ -69,7 +69,7 @@ void setup()
 void loop()
 {
   // initial num
-  num = 0;
+  unsigned num = 0;
 
   if (digitalRead(SIGNAL_PIN1) == HIGH)
     num | 1;
@@ -88,6 +88,7 @@ void loop()
   if (digitalRead(SIGNAL_PIN4) == LOW)
     num & 7;
 
+  Serial.println(num);
   // that is bad MKAY
   if (num == 15)
   {
@@ -98,19 +99,19 @@ void loop()
   }
   else
   {
-    if (num & 1)
+    if (num & 1 > 0)
       e.write(OPEN);
     else
       e.write(CLOSE);
-    if (num & 2)
+    if (num & 2 > 0)
       n.write(OPEN);
     else
       n.write(CLOSE);
-    if (num & 4)
+    if (num & 4 > 0)
       f.write(OPEN);
     else
       f.write(CLOSE);
-    if (num & 8)
+    if (num & 8 > 0)
       v.write(OPEN);
     else
       v.write(CLOSE);
