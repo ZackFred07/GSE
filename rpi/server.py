@@ -7,17 +7,22 @@ PORT = 9001
 
 """Part of the 3 servo reciever code cinematic universe"""
 
-# bits: Fill Servo, NOX Servo, ETH/MAIN Servo
+# Pins based on bits
+# VEN - 0
+# FIL - 1
+# NOX - 2
+# ETH - 3
 # 1 = OPEN, 0 = Close, X = Previous State/Doesnt Matter
 # Concept Behind This Code:
 # State      | DPF | IREC
 # ------------------------------------------
-# Close      | X00 | 0X0
-# Fire       | 011 | 0X1
-# Abort      | 001 | 0X1
-# Fill       | 100 | 1X0
-# Close Fill | 000 | 0X0
-
+# Close ALL  | 0000 | 00X0
+# Fire       | 0011 | 00X1
+# Abort      | 0010 | 00X0
+# Fill       | 0100 | 01X0
+# Vent       | 1000 | 10X0
+# Close Vent | 0XXX | 0XXX
+# Close Fill | X0XX | X0XX
 # fire - 17
 # armFire - 27
 # fill - 22
@@ -28,33 +33,41 @@ PORT = 9001
 
 fire = LED(17)
 armFire = LED(27)
-fill = LED(22)
 externalETH = LED(23)
 externalNOX = LED(24)
 externalFIL = LED(25)
+externalVEN = LED(26)
 
 
 def set_servos(State):
     if (State == 'close'):  # all off
         externalETH.off()
         externalNOX.off()
-        externalFIL.off()
     elif (State == 'fire'):
         externalETH.on()
         externalNOX.on()
         externalFIL.off()
+        externalVEN.off()
     elif (State == 'abort'):
         externalETH.on()
         externalNOX.off()
         externalFIL.off()
+        externalVEN.off()
     elif (State == 'fill'):
         externalETH.off()
         externalNOX.off()
         externalFIL.on()
-    elif (State == 'close_fill'):
+        externalVEN.off()
+    elif (State == 'vent'):
         externalETH.off()
         externalNOX.off()
         externalFIL.off()
+        externalVEN.off()
+    elif (State == 'close_vent'):
+        externalVEN.off()
+    elif (State == 'close_fill'):
+        externalFIL.off()
+
     else:
         print("States are not properly")
 
@@ -65,19 +78,19 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
     def do_POST(self):
-        #        if(self.path == "/v"):
-        # print("Vent")
-
-        #        elif(self.path == "/vc"):
-        # print("Vent close")
-
-        if (self.path == "/f"):
+        if (self.path == "/v"):
+            # print("Vent")
+            set_servos('vent')
+        elif (self.path == "/vc"):
+            # print("Vent close")
+            set_servos('close')
+        elif (self.path == "/f"):
             # print("Fill")
             set_servos('fill')
 
         elif (self.path == "/fc"):
            # print("Fill close")
-            set_servos('close_fill')
+            set_servos('close')
 
         elif (self.path == "/m"):
            # print("Arm E-Match")
@@ -102,6 +115,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif (self.path == "/a"):
             # print("Abort")
             set_servos('abort')
+
 
         # print(self.path)
         # print(self.headers)
