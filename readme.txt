@@ -1,8 +1,8 @@
-    | RPI(GPIO) | Nano | Servo
-------------------------------
-ETH | 23        | 2    | 7
-NOX | 24        | 3    | 8
-FIL | 25        | 4    | 9
-VEN | 21        | 6    | 10
+    | RPI(GPIO) | Nano | Servo | Servo Port Left to right
+-----------------------------------------------------------
+ETH | 23        | 2    | 7     | 2nd
+NOX | 24        | 3    | 8     | 1st
+FIL | 25        | 4    | 9     | 3rd
+VEN | 21        | 6    | 10    | 4th
 
-OTH | 26        | 13   |
+IDK | 26        | 13   |

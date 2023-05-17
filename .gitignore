@@ -2,3 +2,5 @@
 *.vscode
 *.json
 .git
+/chip
+/dale
