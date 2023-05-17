@@ -69,7 +69,7 @@ void setup()
 void loop()
 {
   // initial num
-  if (digitalRead(SIGNAL_PIN1) == HIGH)
+  if (digitalRead(SIGNAL_PIN2) == HIGH)
   {
     e.write(90);
     n.write(90);

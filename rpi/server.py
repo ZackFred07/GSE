@@ -25,18 +25,19 @@ PORT = 9001
 # Close Fill | X0XX | X0XX
 # fire - 17
 # armFire - 27
-# fill - 22
 # externalETH - 23
 # externalNOX - 24
 # externalFIL - 25
+# externalVEN - 26
 
 fire = LED(17)
 armFire = LED(27)
-fill = LED(22)
+# fill = LED(22)
 externalETH = LED(23)
 externalNOX = LED(24)
 externalFIL = LED(25)
-externalVEN = LED(26)
+externalVEN = LED(21)
+externalIDK = LED(26)
 
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
